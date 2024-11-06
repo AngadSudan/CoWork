@@ -1,12 +1,9 @@
 import express from 'express';
-
+import { SignupController } from '../controllers/login.controller.js';
 const SignupRouter= express.Router();
 
-SignupRouter.post('/',(req,res)=>{
-    const { email, password } = req.body;
-    
-    res.status(200).send(`Email is: ${email}, Password is: ${password}`);
-}).get('/',(req,res)=>{
+SignupRouter.post('/',SignupController)
+.get('/',(req,res)=>{
     console.log('tried to acess the signup page');
     res.send('work is done');
 })

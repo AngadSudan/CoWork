@@ -1,4 +1,4 @@
 import LoginRouter from "./Login.route.js";
 import SignupRouter from './Signup.route.js';
-
-export {SignupRouter,LoginRouter};
+import logoutRouter from "./logout.route.js";
+export {SignupRouter,LoginRouter, logoutRouter};

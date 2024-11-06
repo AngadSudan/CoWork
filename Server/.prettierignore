@@ -1,0 +1,6 @@
+  "prettierignore": [
+    "/.vscode"
+    "node_modules/",
+    "dist/",
+    ".cache/"
+  ],
