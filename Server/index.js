@@ -10,7 +10,7 @@ import { Server } from "socket.io";
 
 const app= express();
 configDotenv('./.env');
-app.use(cors({origin:process.env.CORS}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -28,7 +28,6 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: process.env.CORS,
         methods: ["GET", "POST"]
     }
 });
@@ -37,5 +36,5 @@ io.on('connection', (socket) => {
     console.log('A user connected');
 });
 
-server.listen(process.env.PORT || 8000 ,()=>{console.log("server started"+process.env.PORT);
+server.listen(process.env.PORT || 8000 ,()=>{console.log("server started 8000");
 })

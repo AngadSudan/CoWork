@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios';
 import { io } from 'socket.io-client';
 function Signup() {
   useEffect(()=>{
-    const socket = io("http://localhost:8000/Register");
+    const socket = io("http://localhost:8000");
     socket.on("connection", () => {
       console.log("Connected to Socket.io server");
     });

@@ -5,7 +5,7 @@ const mongodb=(url)=>{
         console.log("mongodb connected");
     })
     .catch(()=>{
-        console.log("error in code");
+        console.log("DB connection failed");
         }
     )
 }
