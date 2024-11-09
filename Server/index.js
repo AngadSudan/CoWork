@@ -1,10 +1,12 @@
 import express from "express";
-import { LoginRouter, logoutRouter , SignupRouter } from "./routes/index.js";
+import { FileUploadRotuer, LoginRouter, logoutRouter , SignupRouter } from "./routes/index.js";
 import { configDotenv } from "dotenv";
 import cors from  "cors";
 import bodyParser from "body-parser";
+import http from 'http';
 import mongodb from "./utils/database.utils.js";
 import cookieParser from "cookie-parser";
+import { Server } from "socket.io";
 
 const app= express();
 configDotenv('./.env');
@@ -20,7 +22,20 @@ mongodb(process.env.DATABASE);
 app.use('/Login',LoginRouter);
 app.use('/Register',SignupRouter);
 app.use('/logout',logoutRouter);
+app.use('/upload',FileUploadRotuer);
 
+const server = http.createServer(app);
 
-app.listen(process.env.PORT || 8000 ,()=>{console.log("server started");
+const io = new Server(server, {
+    cors: {
+        origin: process.env.CORS,
+        methods: ["GET", "POST"]
+    }
+});
+
+io.on('connection', (socket) => {
+    console.log('A user connected');
+});
+
+server.listen(process.env.PORT || 8000 ,()=>{console.log("server started"+process.env.PORT);
 })

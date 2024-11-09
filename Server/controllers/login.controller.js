@@ -26,6 +26,7 @@ const loginController =async (req,res)=>{
 }
 const SignupController = async (req, res) => {
     const { username,email,password } = req.body;
+    console.log(username,email,password);
     if(username && email && password){
         const returnedUser = await User.create({username,email,password});
         try {  
@@ -35,13 +36,13 @@ const SignupController = async (req, res) => {
                 httpOnly: true,
                 secure: true,
             });
+            console.log(returnedUser);
         } catch (error) {
             console.log(error);
             res.send('some internal error occured');
         }
         
         if(returnedUser){
-
             res.status(200).send(`Email is: ${email}, Password is: ${password}`);
         }else{
             res.status(414).send('user not created');
