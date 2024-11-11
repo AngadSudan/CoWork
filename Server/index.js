@@ -1,5 +1,5 @@
 import express from "express";
-import { FileUploadRotuer, LoginRouter, logoutRouter , SignupRouter } from "./routes/index.js";
+import { ChatRouter, FileUploadRotuer, LoginRouter, logoutRouter , SignupRouter } from "./routes/index.js";
 import { configDotenv } from "dotenv";
 import cors from  "cors";
 import bodyParser from "body-parser";
@@ -22,7 +22,11 @@ mongodb(process.env.DATABASE);
 app.use('/Login',LoginRouter);
 app.use('/Register',SignupRouter);
 app.use('/logout',logoutRouter);
+//file uploading 
 app.use('/upload',FileUploadRotuer);
+//real time chat application
+app.use('/chat', ChatRouter);
+
 
 const server = http.createServer(app);
 

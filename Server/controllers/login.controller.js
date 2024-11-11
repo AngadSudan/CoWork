@@ -5,10 +5,8 @@ const loginController =async (req,res)=>{
     const storedData= await User.findOne({email});    
     const DBpassword= await storedData.isPasswordCorrect(password,storedData.password);
     const AccessToken= await storedData.generateAccessToken();
-    res.cookie('AccessToken',AccessToken, {
-        httpOnly: true,
-        secure: true,
-    })
+    
+    const cookieData= {AccessToken, id:storedData._id,};
     if(storedData.email!==null && email!==storedData.email){        
 
         console.log('user entered',email, 'but email from database',storedData.email);
@@ -19,7 +17,10 @@ const loginController =async (req,res)=>{
         res.send({"success":false, "response":"password not found"});
     
     }else{
-
+        res.cookie('AccessToken',cookieData, {
+            httpOnly: true,
+            secure: true,
+        })
         res.status(200).send({"success":true,"response":"Login successful "});
     
     }
