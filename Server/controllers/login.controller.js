@@ -1,12 +1,20 @@
 import User from "../models/user.models.js";
 import generateAccessAndRefreshToken from "../utils/Tokens.utils.js";
 const loginController =async (req,res)=>{
-    const { email, password } = req.body;  
-    const storedData= await User.findOne({email});    
+    const { email, password } = req.body; 
+
+    if(!email || !password){
+        res.status(404).send('please enter some data');
+    } 
+
+    const storedData= await User.findOne({email});  
+    if(!storedData){
+        res.status(404).send('Please enter a registered email');
+    }
     const DBpassword= await storedData.isPasswordCorrect(password,storedData.password);
     const AccessToken= await storedData.generateAccessToken();
     
-    const cookieData= {AccessToken, id:storedData._id,};
+    const cookieData= {AccessToken, id:storedData?._id,};
     if(storedData.email!==null && email!==storedData.email){        
 
         console.log('user entered',email, 'but email from database',storedData.email);
@@ -27,7 +35,7 @@ const loginController =async (req,res)=>{
 }
 const SignupController = async (req, res) => {
     const { username,email,password } = req.body;
-    console.log(username,email,password);
+
     if(username && email && password){
         const returnedUser = await User.create({username,email,password});
         try {  
